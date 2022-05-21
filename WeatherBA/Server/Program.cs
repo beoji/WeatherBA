@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<WeatherContext>(o =>
                     o.UseSqlServer(builder.Configuration.GetConnectionString("baConnection")));
 
-builder.Services.AddScoped<IAsyncRepo<Forecast>, SqlForecastRepo>();
+builder.Services.AddScoped<IAsyncRepo<Forecast>, ForecastRepo>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());

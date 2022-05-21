@@ -18,7 +18,7 @@ public class MockForecastRepo : IAsyncRepo<Forecast>
         throw new NotImplementedException();
     }
 
-    public Task<List<Forecast>> GetAllAsync()
+    public Task<IReadOnlyList<Forecast>> GetAllAsync()
     {
         //return Enumerable.Range(1, 5).Select(index => new Forecast
         //    {

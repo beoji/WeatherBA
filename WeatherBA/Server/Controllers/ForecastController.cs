@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WeatherBA.Shared.Dtos;
 using WeatherBA.Server.Functions.Query;
-using WeatherBA.Shared.Entities;
+using WeatherBA.Server.Functions.Commands;
 using MediatR;
 
 namespace WeatherBA.Server.Controllers;
@@ -25,9 +25,19 @@ public class ForecastController : ControllerBase
     }
      
     [HttpGet("{id}")]
-    public ActionResult<ForecastReadDto> GetForecastById(int id)
+    public async Task<ActionResult<ForecastReadDto>> GetForecastById(int id)
     {
-        return NotFound();
-        //return Ok(_repository.GetByIdAsync(id));
+        var request = new GetForecastByIdQuery() { Id = id };
+        var result = await _mediator.Send(request);
+        if (result is null)
+            return NotFound();
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<CreateForecastCommandResponse>> CreateForecast([FromBody] CreateForecastCommand createForecastCommand)
+    {
+        var result = await _mediator.Send(createForecastCommand);
+        return result;
     }
 }
