@@ -1,4 +1,5 @@
 ﻿using FluentValidation.Results;
+using WeatherBA.Shared.Common;
 
 namespace WeatherBA.Server.Functions.Commands;
 
@@ -9,9 +10,9 @@ public class CreateForecastCommandResponse : BaseResponse
     public CreateForecastCommandResponse() : base()
     { }
 
-    public CreateForecastCommandResponse(ValidationResult validationResult)
-        : base(validationResult)
-    { }
+    //public CreateForecastCommandResponse(ValidationResult validationResult)
+    //    : base(validationResult)
+    //{ }
 
     public CreateForecastCommandResponse(string message)
         : base(message)

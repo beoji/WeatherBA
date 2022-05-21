@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using WeatherBA.Server.Functions.Commands;
 using WeatherBA.Shared.Dtos;
 using WeatherBA.Shared.Entities;
 
@@ -10,5 +11,6 @@ public class ForecastProfile : Profile
     {
         // source -> target
         CreateMap<Forecast, ForecastReadDto>();
+        CreateMap<CreateForecastCommand, Forecast>();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace WeatherBA.Server.Functions.Commands;
+﻿using FluentValidation;
+
+namespace WeatherBA.Server.Functions.Commands;
 
 public class CreateForecastCommandValidator : AbstractValidator<CreateForecastCommand>
 {

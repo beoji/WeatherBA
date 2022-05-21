@@ -22,7 +22,7 @@ public class CreateForecastCommandHandler
         var validatorResult = await validator.ValidateAsync(request);
 
         if (!validatorResult.IsValid)
-            return new CreateForecastCommandResponse(validatorResult);
+            return new CreateForecastCommandResponse("Validation Error");
 
         var forecast = _mapper.Map<Forecast>(request);
 

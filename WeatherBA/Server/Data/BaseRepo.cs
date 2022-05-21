@@ -18,9 +18,11 @@ public class BaseRepo<T> : IAsyncRepo<T> where T : class
     {
         return await _context.Set<T>().FindAsync(id);
     }
-    public Task<T> AddAsync(T entity)
+    public async Task<T> AddAsync(T entity)
     {
-        throw new NotImplementedException();
+        await _context.Set<T>().AddAsync(entity);
+        await _context.SaveChangesAsync();
+        return entity;
     }
     public Task DeleteAsync(T entity)
     {
