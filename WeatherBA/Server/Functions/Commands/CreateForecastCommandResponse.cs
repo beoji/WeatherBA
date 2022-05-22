@@ -9,11 +9,12 @@ public class CreateForecastCommandResponse : BaseResponse
 
     public CreateForecastCommandResponse() : base()
     { }
-
+    public CreateForecastCommandResponse(List<string> validationErrors) 
+        : base(validationErrors)
+    { }
     //public CreateForecastCommandResponse(ValidationResult validationResult)
     //    : base(validationResult)
     //{ }
-
     public CreateForecastCommandResponse(string message)
         : base(message)
     { }
@@ -26,5 +27,6 @@ public class CreateForecastCommandResponse : BaseResponse
     {
         Id = webinarId;
     }
+
 }
 

@@ -1,40 +1,41 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WeatherBA.Shared.Common;
+namespace WeatherBA.Server.Functions;
 public class BaseResponse
 {
     public ResponseStatus Status { get; set; }
     public bool Success { get; set; }
-    public string Message { get; set; }
-    public List<string> ValidationErrors { get; set; }
+    public string? Message { get; set; }
+    public List<string> ValidationErrors { get; set; } = new List<string>();
 
     public BaseResponse()
     {
-        ValidationErrors = new List<string>();
         Success = true;
     }
     public BaseResponse(string message = null)
     {
-        ValidationErrors = new List<string>();
         Success = true;
         Message = message;
     }
 
     public BaseResponse(string message, bool success)
     {
-        ValidationErrors = new List<string>();
         Success = success;
         Message = message;
     }
 
-    //public BaseResponse(ValidationResult validationResult)
+    public BaseResponse(List<string> validationErrors)
+    {
+        ValidationErrors = validationErrors;
+    }
+
+    //public BaseResponse(ValidationResult validatorResult)
     //{
-    //    ValidationErrors = new List<String>();
-    //    Success = validationResult.Errors.Count < 0;
-    //    foreach (var item in validationResult.Errors)
-    //    {
+    //    var validationErrors = new List<string>();
+    //    var success = validatorResult.Errors.count < 0;
+    //    foreach (var item in validatorResult.Errors)
     //        ValidationErrors.Add(item.ErrorMessage);
-    //    }
+    // Nie działa validatorResult nie ma atrybutu Errors
     //}
 }
 public enum ResponseStatus

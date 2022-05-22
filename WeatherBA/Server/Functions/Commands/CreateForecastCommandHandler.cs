@@ -22,10 +22,14 @@ public class CreateForecastCommandHandler
         var validatorResult = await validator.ValidateAsync(request);
 
         if (!validatorResult.IsValid)
-            return new CreateForecastCommandResponse("Validation Error");
+        {
+            var errorList = new List<string>();
+            foreach(var item in validatorResult.Errors)
+                errorList.Add(item.ErrorMessage);
+            return new CreateForecastCommandResponse(errorList);
+        }
 
         var forecast = _mapper.Map<Forecast>(request);
-
         forecast = await _repo.AddAsync(forecast);
 
         return new CreateForecastCommandResponse(forecast.Id);
