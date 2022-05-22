@@ -25,7 +25,9 @@ public class CreateForecastCommandHandler
         {
             var errorList = new List<string>();
             foreach(var item in validatorResult.Errors)
+            {
                 errorList.Add(item.ErrorMessage);
+            }
             return new CreateForecastCommandResponse(errorList);
         }
 

@@ -3,6 +3,7 @@ using WeatherBA.Shared.Dtos;
 using WeatherBA.Server.Functions.Query;
 using WeatherBA.Server.Functions.Commands;
 using MediatR;
+using System.Diagnostics;
 
 namespace WeatherBA.Server.Controllers;
 
@@ -38,6 +39,10 @@ public class ForecastController : ControllerBase
     public async Task<ActionResult<CreateForecastCommandResponse>> CreateForecast([FromBody] CreateForecastCommand createForecastCommand)
     {
         var result = await _mediator.Send(createForecastCommand);
+        Console.WriteLine(result.ValidationErrors);
+        Console.WriteLine(result.Message);
+        Console.WriteLine(result.Status);
+        Console.WriteLine(result.Success);
         return result;
     }
 }
