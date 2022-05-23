@@ -1,0 +1,74 @@
+﻿@page "/CreateForecast"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using WeatherBA.Shared.Dtos
+@using WeatherBA.Shared.Responses
+@inject HttpClient Http
+
+<PageTitle>Create forecast</PageTitle>
+
+<h1>Create forecast</h1>
+
+<EditForm Model="@forecast" OnValidSubmit="@SaveForecast">
+    <label>Id:</label>
+    <input type="text" @bind-value="forecast.Id"/>
+
+    <label>Date:</label>
+    <input type="text" @bind-value="forecast.Date"/>
+
+    <label>Temperature:</label>
+    <input type="text" @bind-value="forecast.TemperatureC"/>
+
+    <label>Summary:</label>
+    <input type="text" @bind-value="forecast.Summary"/>
+
+    <input type="submit" value="Save"/>
+
+</EditForm>
+
+@if (response.Status != null)
+{
+    <p>id = @response.Id</p>
+    <p>status = @response.Status</p>
+    <p>success = @response.Success</p>
+    <p>message = @response.Message</p>
+        
+    <ul>
+        @foreach(var item in response.ValidationErrors)
+        {
+            <li class="">@item</li> 
+        }
+    </ul>
+}
+else
+{
+    <p>No response</p>
+}
+
+
+@if(msg != null)
+{
+    @msg.ToString()
+    @msg.Content
+    @msg.RequestMessage
+}
+
+
+
+@code {
+    private CreateForecastCommandResponse? response = null;
+    private ForecastCreateDto? forecast;
+    private HttpResponseMessage? msg;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecast = new ForecastCreateDto();
+        response = new CreateForecastCommandResponse();
+    }
+
+    protected async Task SaveForecast()
+    {
+        msg =  await Http.PostAsJsonAsync("api/Forecast", forecast);
+        response = await msg.Content.ReadFromJsonAsync<CreateForecastCommandResponse>();
+    }
+}

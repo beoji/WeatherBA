@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using WeatherBA.Shared.Dtos;
+using WeatherBA.Shared.Responses;
 using WeatherBA.Server.Functions.Query;
 using WeatherBA.Server.Functions.Commands;
+
 using MediatR;
-using System.Diagnostics;
+using AutoMapper;
 
 namespace WeatherBA.Server.Controllers;
 
@@ -12,9 +14,11 @@ namespace WeatherBA.Server.Controllers;
 public class ForecastController : ControllerBase
 {
     private readonly IMediator _mediator;
-    public ForecastController(IMediator mediator)
+    private readonly IMapper _mapper;
+    public ForecastController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -36,13 +40,10 @@ public class ForecastController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreateForecastCommandResponse>> CreateForecast([FromBody] CreateForecastCommand createForecastCommand)
+    public async Task<ActionResult<CreateForecastCommandResponse>> CreateForecast([FromBody] ForecastCreateDto forecastCreateDto)
     {
-        var result = await _mediator.Send(createForecastCommand);
-        Console.WriteLine(result.ValidationErrors);
-        Console.WriteLine(result.Message);
-        Console.WriteLine(result.Status);
-        Console.WriteLine(result.Success);
+        var command = _mapper.Map<CreateForecastCommand>(forecastCreateDto);
+        var result = await _mediator.Send(command);
         return result;
     }
 }

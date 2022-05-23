@@ -1,8 +1,6 @@
-﻿using FluentValidation.Results;
-using WeatherBA.Shared.Common;
+﻿using WeatherBA.Shared.Common;
 
-namespace WeatherBA.Server.Functions.Commands;
-
+namespace WeatherBA.Shared.Responses;
 public class CreateForecastCommandResponse : BaseResponse
 {
     public int? Id { get; set; }

@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WeatherBA.Server.Functions;
+namespace WeatherBA.Shared.Responses;
 public class BaseResponse
 {
-    public ResponseStatus Status { get; set; }
-    public bool Success { get; set; }
-    public string? Message { get; set; }
+    public ResponseStatus Status { get; set; } = ResponseStatus.Null;
+    public bool? Success { get; set; } = null;
+    public string? Message { get; set; } = String.Empty;
     public List<string> ValidationErrors { get; set; } = new List<string>();
 
     public BaseResponse()
@@ -40,6 +40,7 @@ public class BaseResponse
 }
 public enum ResponseStatus
 {
+    Null = -1,
     Success = 0,
     NotFound = 1,
     BadQuery = 2,

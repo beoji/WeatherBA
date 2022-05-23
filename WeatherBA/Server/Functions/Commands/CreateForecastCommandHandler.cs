@@ -2,6 +2,7 @@
 using MediatR;
 using WeatherBA.Data;
 using WeatherBA.Shared.Entities;
+using WeatherBA.Shared.Responses;
 
 namespace WeatherBA.Server.Functions.Commands;
 public class CreateForecastCommandHandler 

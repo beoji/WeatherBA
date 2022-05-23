@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using WeatherBA.Shared.Dtos;
+using WeatherBA.Shared.Responses;
 
 namespace WeatherBA.Server.Functions.Commands;
 public class CreateForecastCommand : IRequest<CreateForecastCommandResponse>
@@ -9,4 +9,3 @@ public class CreateForecastCommand : IRequest<CreateForecastCommandResponse>
     public int TemperatureC { get; set; }
     public string? Summary { get; set; }
 }
-
