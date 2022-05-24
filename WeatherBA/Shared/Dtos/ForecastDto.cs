@@ -1,5 +1,5 @@
 ﻿namespace WeatherBA.Shared.Dtos;
-public class ForecastReadDto
+public class ForecastDto
 {
     public int Id { get; set; }
     public DateTime Date { get; set; }

@@ -11,10 +11,14 @@ public class ForecastProfile : Profile
     public ForecastProfile()
     {
         // source -> target
-        CreateMap<Forecast, ForecastReadDto>();
+        CreateMap<Forecast, ForecastDto>();
         CreateMap<CreateForecastCommand, Forecast>();
 
-        CreateMap<ForecastCreateDto, CreateForecastCommand>();
-        CreateMap<CreateForecastCommandResponse, ForecastReadDto>();
+        CreateMap<ForecastDto, CreateForecastCommand>();
+        CreateMap<CreateForecastCommandResponse, ForecastDto>();
+
+        CreateMap<UpdateForecastCommand, Forecast>();
+
+
     }
 }

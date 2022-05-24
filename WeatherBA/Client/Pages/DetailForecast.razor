@@ -1,0 +1,34 @@
+﻿@page "/forecast/{Id}"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using WeatherBA.Shared.Dtos;
+@inject HttpClient Http
+
+
+<h2>Forecast Details</h2>
+
+@if (forecast == null)
+{
+    <p>Loading...</p>
+} 
+else
+{
+    <h3>Id: @forecast.Id</h3>
+    <h4>Date: @forecast.Date</h4>
+    <h4>Summary: @forecast.Summary</h4>
+    <h4>Temperature: @forecast.TemperatureC</h4>
+}
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    private ForecastDto forecast = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecast = await Http.GetFromJsonAsync<ForecastDto>("api/Forecast/" + Id);
+    }
+
+}

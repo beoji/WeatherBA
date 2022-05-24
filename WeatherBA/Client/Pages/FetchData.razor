@@ -3,6 +3,8 @@
 @using System.Text.Json.Serialization
 @using WeatherBA.Shared.Dtos;
 @inject HttpClient Http
+@inject NavigationManager NavManager
+
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -22,15 +24,22 @@ else
                 <th>Date</th>
                 <th>Temp. (C)</th>
                 <th>Summary</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var forecast in forecasts)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>
+                        <a href="/forecast/@forecast.Id">@forecast.Date.ToShortDateString()</a>
+                    </td>
                     <td>@forecast.TemperatureC</td>
                     <td>@forecast.Summary</td>
+                    <td>
+                        <button @onclick="@(() => EditOnclick(forecast.Id.ToString()))">Edit</button>
+                        <button @onclick="@(() => DeleteOnclick(forecast.Id.ToString()))">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -38,10 +47,20 @@ else
 }
 
 @code {
-    private ForecastReadDto[]? forecasts;
+    private ForecastDto[]? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<ForecastReadDto[]>("api/Forecast");
+        forecasts = await Http.GetFromJsonAsync<ForecastDto[]>("api/Forecast");
+    }
+
+    protected void EditOnclick(string Id)
+    {
+        NavManager.NavigateTo("/forecast/update/" + Id);   
+    }
+
+    protected void DeleteOnclick(string id)
+    {
+        NavManager.NavigateTo("/"); 
     }
 }

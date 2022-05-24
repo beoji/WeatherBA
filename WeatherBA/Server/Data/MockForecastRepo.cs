@@ -40,7 +40,7 @@ public class MockForecastRepo : IAsyncRepo<Forecast>
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(Forecast entity)
+    public void UpdateAsync(Forecast entity)
     {
         throw new NotImplementedException();
     }

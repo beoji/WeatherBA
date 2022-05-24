@@ -6,7 +6,7 @@ using WeatherBA.Shared.Entities;
 
 namespace WeatherBA.Server.Functions.Query;
 
-public class GetForecastByIdQueryHandler : IRequestHandler<GetForecastByIdQuery, ForecastReadDto>
+public class GetForecastByIdQueryHandler : IRequestHandler<GetForecastByIdQuery, ForecastDto>
 {
     private readonly IAsyncRepo<Forecast> _repo;
     private readonly IMapper _mapper;
@@ -17,10 +17,10 @@ public class GetForecastByIdQueryHandler : IRequestHandler<GetForecastByIdQuery,
         _mapper = mapper;
     }
 
-    public async Task<ForecastReadDto> Handle(GetForecastByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ForecastDto> Handle(GetForecastByIdQuery request, CancellationToken cancellationToken)
     {
         var forecast = await _repo.GetByIdAsync(request.Id);
         // target <- source
-        return _mapper.Map<ForecastReadDto>(forecast);
+        return _mapper.Map<ForecastDto>(forecast);
     }
 }

@@ -3,5 +3,5 @@ using WeatherBA.Shared.Dtos;
 
 namespace WeatherBA.Server.Functions.Query;
 
-public class GetAllForecastsQuery : IRequest<List<ForecastReadDto>>
+public class GetAllForecastsQuery : IRequest<List<ForecastDto>>
 {   }

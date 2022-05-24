@@ -28,8 +28,8 @@ public class BaseRepo<T> : IAsyncRepo<T> where T : class
     {
         throw new NotImplementedException();
     }
-    public Task UpdateAsync(T entity)
+    public void UpdateAsync(T entity)
     {
-        throw new NotImplementedException();
+        //Nothing
     }
 }

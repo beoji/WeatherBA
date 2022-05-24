@@ -22,7 +22,7 @@ public class ForecastController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ForecastReadDto>>> GetAllForecasts()
+    public async Task<ActionResult<IEnumerable<ForecastDto>>> GetAllForecasts()
     {
         var request = new GetAllForecastsQuery();
         var result = await _mediator.Send(request);
@@ -30,7 +30,7 @@ public class ForecastController : ControllerBase
     }
      
     [HttpGet("{id}")]
-    public async Task<ActionResult<ForecastReadDto>> GetForecastById(int id)
+    public async Task<ActionResult<ForecastDto>> GetForecastById(int id)
     {
         var request = new GetForecastByIdQuery() { Id = id };
         var result = await _mediator.Send(request);
@@ -40,9 +40,17 @@ public class ForecastController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreateForecastCommandResponse>> CreateForecast([FromBody] ForecastCreateDto forecastCreateDto)
+    public async Task<ActionResult<CreateForecastCommandResponse>> CreateForecast([FromBody] ForecastDto forecastCreateDto)
     {
         var command = _mapper.Map<CreateForecastCommand>(forecastCreateDto);
+        var result = await _mediator.Send(command);
+        return result;
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<CreateForecastCommandResponse>> UpdateForecast([FromBody] ForecastDto forecastCreateDto)
+    {
+        var command = _mapper.Map<UpdateForecastCommand>(forecastCreateDto);
         var result = await _mediator.Send(command);
         return result;
     }

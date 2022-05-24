@@ -47,25 +47,22 @@
 
 
 @code {
-    private ForecastCreateDto? forecast;
+    private ForecastDto? forecast;
 
     private CreateForecastCommandResponse? response = null;
-    private HttpResponseMessage? frame;
 
     protected override async Task OnInitializedAsync()
     {
-        forecast = new ForecastCreateDto();
+        forecast = new ForecastDto();
     }
 
     protected async Task SaveForecast()
     {
         //response = new CreateForecastCommandResponse();
-
-        frame =  await Http.PostAsJsonAsync("api/Forecast", forecast);
+        HttpResponseMessage frame =  await Http.PostAsJsonAsync("api/Forecast", forecast);
         response = await frame.Content.ReadFromJsonAsync<CreateForecastCommandResponse>();
         
         if(response.Success == true)
-             NavManager.NavigateTo("/");
-            
+             NavManager.NavigateTo("/");   
     }
 }

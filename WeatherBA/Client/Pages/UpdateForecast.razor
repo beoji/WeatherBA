@@ -1,0 +1,77 @@
+﻿@page "/forecast/update/{Id}"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using WeatherBA.Shared.Dtos
+@using WeatherBA.Shared.Responses
+@inject HttpClient Http
+@inject NavigationManager NavManager
+
+
+<PageTitle>Update forecast</PageTitle>
+
+<h1>Update forecast</h1>
+
+
+@if (response != null)
+{
+    if(response.ValidationErrors != null)
+    {        
+        <ul>
+            @foreach(var item in response.ValidationErrors)
+            {
+                <li class="">@item</li> 
+            }
+        </ul>
+    }        
+}
+
+@if (forecast != null)
+{
+
+    <EditForm Model="@forecast" OnValidSubmit="@SaveForecast">
+        <table>
+
+            <tr><label>Id:</label></tr>
+            <tr><input type="text" @bind-value="forecast.Id"/></tr>
+
+            <tr><label>Date:</label></tr>
+            <tr><input type="text" @bind-value="forecast.Date"/></tr>
+
+            <tr><label>Temperature:</label></tr>
+            <tr><input type="text" @bind-value="forecast.TemperatureC"/></tr>
+
+            <tr><label>Summary:</label></tr>
+            <tr><input type="text" @bind-value="forecast.Summary"/></tr>
+
+            <input type="submit" value="Save"/>
+        </table>
+    </EditForm>
+} else
+{
+    <p>Loadnig...</p>
+}
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private ForecastDto? forecast = new ForecastDto();
+
+    private CreateForecastCommandResponse? response = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecast =  await Http.GetFromJsonAsync<ForecastDto>("api/Forecast" + Id);
+    }
+
+    protected async Task SaveForecast()
+    {
+        //response = new CreateForecastCommandResponse();
+        HttpResponseMessage frame =  await Http.PutAsJsonAsync("api/Forecast/" + Id, forecast);
+        response = await frame.Content.ReadFromJsonAsync<CreateForecastCommandResponse>();
+        
+        if(response.Success == true)
+             NavManager.NavigateTo("/forecast/" + Id);   
+    }
+}
