@@ -4,71 +4,68 @@
 @using WeatherBA.Shared.Dtos
 @using WeatherBA.Shared.Responses
 @inject HttpClient Http
+@inject NavigationManager NavManager
+
 
 <PageTitle>Create forecast</PageTitle>
 
 <h1>Create forecast</h1>
 
+
+@if (response != null)
+{
+    if(response.ValidationErrors != null)
+    {        
+        <ul>
+            @foreach(var item in response.ValidationErrors)
+            {
+                <li class="">@item</li> 
+            }
+        </ul>
+    }        
+}
+
+
 <EditForm Model="@forecast" OnValidSubmit="@SaveForecast">
-    <label>Id:</label>
-    <input type="text" @bind-value="forecast.Id"/>
+    <table>
 
-    <label>Date:</label>
-    <input type="text" @bind-value="forecast.Date"/>
+        <tr><label>Id:</label></tr>
+        <tr><input type="text" @bind-value="forecast.Id"/></tr>
 
-    <label>Temperature:</label>
-    <input type="text" @bind-value="forecast.TemperatureC"/>
+        <tr><label>Date:</label></tr>
+        <tr><input type="text" @bind-value="forecast.Date"/></tr>
 
-    <label>Summary:</label>
-    <input type="text" @bind-value="forecast.Summary"/>
+        <tr><label>Temperature:</label></tr>
+        <tr><input type="text" @bind-value="forecast.TemperatureC"/></tr>
 
-    <input type="submit" value="Save"/>
+        <tr><label>Summary:</label></tr>
+        <tr><input type="text" @bind-value="forecast.Summary"/></tr>
 
+        <input type="submit" value="Save"/>
+    </table>
 </EditForm>
-
-@if (response.Status != null)
-{
-    <p>id = @response.Id</p>
-    <p>status = @response.Status</p>
-    <p>success = @response.Success</p>
-    <p>message = @response.Message</p>
-        
-    <ul>
-        @foreach(var item in response.ValidationErrors)
-        {
-            <li class="">@item</li> 
-        }
-    </ul>
-}
-else
-{
-    <p>No response</p>
-}
-
-
-@if(msg != null)
-{
-    @msg.ToString()
-    @msg.Content
-    @msg.RequestMessage
-}
-
 
 
 @code {
-    private CreateForecastCommandResponse? response = null;
     private ForecastCreateDto? forecast;
-    private HttpResponseMessage? msg;
+
+    private CreateForecastCommandResponse? response = null;
+    private HttpResponseMessage? frame;
 
     protected override async Task OnInitializedAsync()
     {
         forecast = new ForecastCreateDto();
-        response = new CreateForecastCommandResponse();
     }
 
     protected async Task SaveForecast()
     {
-        msg =  await Http.PostAsJsonAsync("api/Forecast", forecast);
-        response = await msg.Content.ReadFromJsonAsync<CreateForecastCommandResponse>();
+        //response = new CreateForecastCommandResponse();
+
+        frame =  await Http.PostAsJsonAsync("api/Forecast", forecast);
+        response = await frame.Content.ReadFromJsonAsync<CreateForecastCommandResponse>();
+        
+        if(response.Success == true)
+             NavManager.NavigateTo("/");
+            
     }
 }

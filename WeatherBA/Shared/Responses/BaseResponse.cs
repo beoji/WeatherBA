@@ -3,6 +3,7 @@
 namespace WeatherBA.Shared.Responses;
 public class BaseResponse
 {
+    public int Id { get; set; } = -1;
     public ResponseStatus Status { get; set; } = ResponseStatus.Null;
     public bool? Success { get; set; } = null;
     public string? Message { get; set; } = String.Empty;
@@ -27,6 +28,15 @@ public class BaseResponse
     public BaseResponse(List<string> validationErrors)
     {
         ValidationErrors = validationErrors;
+        Status = ResponseStatus.ValidationError;
+        Success = false;
+    }
+    
+    public BaseResponse(int forecastId)
+    {
+        Id = forecastId;
+        Status = ResponseStatus.Success;
+        Success = true;
     }
 
     //public BaseResponse(ValidationResult validatorResult)

@@ -3,8 +3,6 @@
 namespace WeatherBA.Shared.Responses;
 public class CreateForecastCommandResponse : BaseResponse
 {
-    public int? Id { get; set; }
-
     public CreateForecastCommandResponse() : base()
     { }
     public CreateForecastCommandResponse(List<string> validationErrors) 
@@ -22,9 +20,8 @@ public class CreateForecastCommandResponse : BaseResponse
     { }
 
     public CreateForecastCommandResponse(int webinarId)
-    {
-        Id = webinarId;
-    }
+        : base(webinarId)
+    { }
 
 }
 
