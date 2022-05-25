@@ -1,0 +1,45 @@
+﻿@using WeatherBA.Shared.Dtos
+@using WeatherBA.Shared.Responses
+
+@if (response != null)
+{
+    if(response.ValidationErrors != null)
+    {        
+        <ul>
+            @foreach(var item in response.ValidationErrors)
+            {
+                <li class="">@item</li>
+            }
+        </ul>
+    }        
+}
+
+<EditForm Model="@forecast" OnValidSubmit="@OnValidSubmit">
+    <table>
+
+        <tr><label>Id:</label></tr>
+        <tr><input type="text" @bind-value="forecast.Id"/></tr>
+
+        <tr><label>Date:</label></tr>
+        <tr><input type="text" @bind-value="forecast.Date"/></tr>
+
+        <tr><label>Temperature:</label></tr>
+        <tr><input type="text" @bind-value="forecast.TemperatureC"/></tr>
+
+        <tr><label>Summary:</label></tr>
+        <tr><input type="text" @bind-value="forecast.Summary"/></tr>
+
+        <button type="submit" class="btn btn-success">
+            @ButtonText
+        </button>
+
+    </table>
+</EditForm>
+
+
+@code {
+    [Parameter] public ForecastDto? forecast { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public CreateForecastCommandResponse? response { get; set; }    
+}
