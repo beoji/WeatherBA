@@ -13,7 +13,7 @@ public class MockForecastRepo : IAsyncRepo<Forecast>
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Forecast entity)
+    public void Remove(Forecast entity)
     {
         throw new NotImplementedException();
     }

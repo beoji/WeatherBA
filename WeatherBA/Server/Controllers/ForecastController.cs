@@ -44,7 +44,7 @@ public class ForecastController : ControllerBase
     {
         var command = _mapper.Map<CreateForecastCommand>(forecastCreateDto);
         var result = await _mediator.Send(command);
-        return result;
+        return Ok(result);
     }
 
     [HttpPut("{id}")]
@@ -52,6 +52,14 @@ public class ForecastController : ControllerBase
     {
         var command = _mapper.Map<UpdateForecastCommand>(forecastUpdateDto);
         var result = await _mediator.Send(command);
-        return result;
+        return Ok(result);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteProduct(int id)
+    {
+        var command = new DeleteForecastCommand() { Id = id };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 }

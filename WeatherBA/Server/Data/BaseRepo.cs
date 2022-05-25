@@ -23,9 +23,9 @@ public class BaseRepo<T> : IAsyncRepo<T> where T : class
         await _context.Set<T>().AddAsync(entity);
         return entity;
     }
-    public Task DeleteAsync(T entity)
+    public void Remove(T entity)
     {
-        throw new NotImplementedException();
+        _context.Set<T>().Remove(entity);
     }
     public void UpdateAsync(T entity)
     {

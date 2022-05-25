@@ -7,6 +7,6 @@ public interface IAsyncRepo<T> where T : class
     Task<IReadOnlyList<T>> GetAllAsync();
     Task<T> AddAsync(T entity);
     void UpdateAsync(T entity);
-    Task DeleteAsync(T entity);
+    void Remove(T entity);
     Task<bool> SaveChangesAsync();
 }
