@@ -35,6 +35,8 @@ public class CreateForecastCommandHandler
         var forecast = _mapper.Map<Forecast>(request);
         forecast = await _repo.AddAsync(forecast);
 
+        await _repo.SaveChangesAsync();
+
         return new CreateForecastCommandResponse(forecast.Id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using WeatherBA.Data;
+using WeatherBA.Shared.Dtos;
 using WeatherBA.Shared.Entities;
 using WeatherBA.Shared.Responses;
 
@@ -32,8 +33,10 @@ public class UpdateForecastCommandHandler
             return new CreateForecastCommandResponse(errorList);
         }
 
-        var forecast = _repo.GetByIdAsync(request.Id);
-        await _mapper.Map(request, forecast);        
+        var forecast = await _repo.GetByIdAsync(request.Id);
+        _mapper.Map(request, forecast);
+
+        await _repo.SaveChangesAsync();
 
         return new CreateForecastCommandResponse(forecast.Id);
     }

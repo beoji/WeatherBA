@@ -48,9 +48,9 @@ public class ForecastController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<CreateForecastCommandResponse>> UpdateForecast([FromBody] ForecastDto forecastCreateDto)
+    public async Task<ActionResult<CreateForecastCommandResponse>> UpdateForecast([FromBody] ForecastDto forecastUpdateDto)
     {
-        var command = _mapper.Map<UpdateForecastCommand>(forecastCreateDto);
+        var command = _mapper.Map<UpdateForecastCommand>(forecastUpdateDto);
         var result = await _mediator.Send(command);
         return result;
     }

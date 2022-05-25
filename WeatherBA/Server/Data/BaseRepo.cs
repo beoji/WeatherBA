@@ -21,7 +21,6 @@ public class BaseRepo<T> : IAsyncRepo<T> where T : class
     public async Task<T> AddAsync(T entity)
     {
         await _context.Set<T>().AddAsync(entity);
-        await _context.SaveChangesAsync();
         return entity;
     }
     public Task DeleteAsync(T entity)
@@ -31,5 +30,9 @@ public class BaseRepo<T> : IAsyncRepo<T> where T : class
     public void UpdateAsync(T entity)
     {
         //Nothing
+    }
+    public async Task<bool> SaveChangesAsync()
+    {
+       return (await _context.SaveChangesAsync() >= 0);
     }
 }

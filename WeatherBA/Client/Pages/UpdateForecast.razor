@@ -32,18 +32,18 @@
         <table>
 
             <tr><label>Id:</label></tr>
-            <tr><input type="text" @bind-value="forecast.Id"/></tr>
+            <tr><InputNumber @bind-Value="forecast.Id" /></tr>
 
             <tr><label>Date:</label></tr>
-            <tr><input type="text" @bind-value="forecast.Date"/></tr>
+            <tr><InputDate @bind-Value="forecast.Date"/></tr>
 
             <tr><label>Temperature:</label></tr>
-            <tr><input type="text" @bind-value="forecast.TemperatureC"/></tr>
+            <tr><InputNumber @bind-Value="forecast.TemperatureC"/></tr>
 
             <tr><label>Summary:</label></tr>
-            <tr><input type="text" @bind-value="forecast.Summary"/></tr>
+            <tr><InputText @bind-Value="forecast.Summary"/></tr>
 
-            <input type="submit" value="Save"/>
+            <button type="submit">Submit</button>
         </table>
     </EditForm>
 } else
@@ -62,7 +62,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        forecast =  await Http.GetFromJsonAsync<ForecastDto>("api/Forecast" + Id);
+        forecast =  await Http.GetFromJsonAsync<ForecastDto>("api/Forecast/" + Id);
     }
 
     protected async Task SaveForecast()

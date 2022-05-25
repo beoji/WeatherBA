@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using WeatherBA.Data;
 using WeatherBA.Shared.Entities;

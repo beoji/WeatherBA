@@ -15,10 +15,10 @@ public class ForecastProfile : Profile
         CreateMap<CreateForecastCommand, Forecast>();
 
         CreateMap<ForecastDto, CreateForecastCommand>();
+        CreateMap<ForecastDto, UpdateForecastCommand>();
         CreateMap<CreateForecastCommandResponse, ForecastDto>();
 
         CreateMap<UpdateForecastCommand, Forecast>();
-
 
     }
 }
