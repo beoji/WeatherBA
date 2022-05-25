@@ -3,6 +3,7 @@
 @using System.Text.Json.Serialization
 @using WeatherBA.Shared.Dtos;
 @inject HttpClient Http
+@inject NavigationManager NavManager
 
 
 <h2>Forecast Details</h2>
@@ -17,6 +18,9 @@ else
     <h4>Date: @forecast.Date</h4>
     <h4>Summary: @forecast.Summary</h4>
     <h4>Temperature: @forecast.TemperatureC</h4>
+
+    <button @onclick="@(() => EditOnclick(forecast.Id.ToString()))">Edit</button>
+    <button @onclick="@(() => DeleteOnclick(forecast.Id.ToString()))">Delete</button>
 }
 
 @code {
@@ -31,4 +35,13 @@ else
         forecast = await Http.GetFromJsonAsync<ForecastDto>("api/Forecast/" + Id);
     }
 
+    protected void EditOnclick(string id)
+    {
+        NavManager.NavigateTo("/forecast/update/" + id);   
+    }
+
+    protected void DeleteOnclick(string id)
+    {
+        NavManager.NavigateTo("/forecast/delete/" + id); 
+    }
 }

@@ -54,13 +54,13 @@ else
         forecasts = await Http.GetFromJsonAsync<ForecastDto[]>("api/Forecast");
     }
 
-    protected void EditOnclick(string Id)
+    protected void EditOnclick(string id)
     {
-        NavManager.NavigateTo("/forecast/update/" + Id);   
+        NavManager.NavigateTo("/forecast/update/" + id);   
     }
 
     protected void DeleteOnclick(string id)
     {
-        NavManager.NavigateTo("/"); 
+        NavManager.NavigateTo("/forecast/delete/" + id); 
     }
 }

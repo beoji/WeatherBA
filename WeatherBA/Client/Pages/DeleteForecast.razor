@@ -1,0 +1,59 @@
+﻿@page "/forecast/delete/{Id}"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using WeatherBA.Shared.Dtos
+@using WeatherBA.Shared.Responses
+@inject HttpClient Http
+@inject NavigationManager NavManager
+
+
+<PageTitle>Delete forecast</PageTitle>
+
+<h1>Delete forecast</h1>
+
+
+@if (response != null)
+{
+    if(response.Message != null)
+    {        
+        <p>response.Message</p>
+    }        
+}
+
+
+@if (forecast == null)
+{
+    <p>Loading...</p>
+} 
+else
+{
+    <h3>Id: @forecast.Id</h3>
+    <h4>Date: @forecast.Date</h4>
+    <h4>Summary: @forecast.Summary</h4>
+    <h4>Temperature: @forecast.TemperatureC</h4>
+
+    <p>Are you sure you want to delete this forecast?</p>
+
+    <button @onclick="RemoveForecast" class="btn btn-success">Delete</button>
+}
+
+
+@code {
+    [Parameter] public string Id { get; set; }
+    private ForecastDto? forecast = new ForecastDto();
+    private DeleteForecastCommandResponse? response = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecast =  await Http.GetFromJsonAsync<ForecastDto>("api/Forecast/" + Id);
+    }
+
+    protected async Task RemoveForecast()
+    {
+        HttpResponseMessage frame =  await Http.DeleteAsync("api/Forecast/" + Id);
+        response = await frame.Content.ReadFromJsonAsync<DeleteForecastCommandResponse>();
+        
+        if(response.Success == true)
+             NavManager.NavigateTo("/");   
+    }
+}
